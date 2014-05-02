@@ -24,9 +24,14 @@ var Drawing = function() {
 	
 	psiTurk.showPage('stage.html');
 
+	d3.select('#image')
+	  .append("img")
+	  .attr("src","/static/images/tiles/tile_15_15.png")
+	  .attr("height","100");
+
 	var sketchpad = Raphael.sketchpad("editor", {
-		width: 400,
-		height: 400,
+		width: 76,
+		height: 100,  // set these based on tile size
 		editing: true
 	});
 	var pen = sketchpad.pen();

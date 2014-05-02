@@ -3,14 +3,14 @@
 from flask import Blueprint, render_template, request, jsonify, Response, abort, current_app
 from jinja2 import TemplateNotFound
 from functools import wraps
-from sqlalchemy import or_
+from sqlalchemy import or_, Column, Integer, String, DateTime, Boolean, Float, Text
 
 from psiturk.psiturk_config import PsiturkConfig
 from psiturk.experiment_errors import ExperimentError
 from psiturk.user_utils import PsiTurkAuthorization, nocache
 
 # # Database setup
-from psiturk.db import db_session, init_db
+from psiturk.db import db_session, init_db, Base
 from psiturk.models import Participant
 from json import dumps, loads
 
@@ -21,7 +21,6 @@ myauth = PsiTurkAuthorization(config)  # if you want to add a password protect r
 
 # explore the Blueprint
 custom_code = Blueprint('custom_code', __name__, template_folder='templates', static_folder='static')
-
 
 
 ###########################################################

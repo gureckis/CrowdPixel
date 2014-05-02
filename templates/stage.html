@@ -1,8 +1,24 @@
 <div id="container-exp">
 	<div id="trial">
-		<h1>Draw your best <span class="warm">alien</span> in the box!</h1>
+		<h1>Do your best to draw a copy of the image on the left in the box on the right!</h1>
+		<p class="text-muted">Suggestions: Fill in dark regions as best you can and use dots or lines to do shading.</p>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-1"></div>
+				<div class="col-xs-5">
+					<div id="image"></div>
+				</div>
+				<div class="col-xs-5">
+					<div id="editor"></div>
+				</div>
+				<div class="col-xs-1"></div>
+
+			</div>
+		</div>		
+
 		<p>Click the green button when you are finished</p>
-		<div id="editor"></div>
+
 		<button type="button" id="Undo" value="next" class="btn btn-warning btn-lg" onclick="e">
         	Undo last
         </button>
@@ -13,6 +29,7 @@
 		<button type="button" id="Next" value="next" class="btn btn-success btn-lg">
         	I'm Done!
         </button>
+		
 	</div>
 </div>
 

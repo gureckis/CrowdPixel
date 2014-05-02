@@ -1,1 +1,7 @@
 participants.db
+
+/.psiturk_history
+
+*.pyc
+
+/server.log
