@@ -5,3 +5,5 @@ participants.db
 *.pyc
 
 /server.log
+
+/static/images/tiles/*.png
