@@ -48,12 +48,22 @@ def getcondition():
 
 @custom_code.route('/complete_condition', methods=['POST'])
 def complete_condition():
-	if 'filename' not in request.args:
-		pass
-	# # save the tiles to the 
-	# pix = Pixels.query.all().order_by(Pixels.n_completed.asc())
-	# pixels = [p for p in pix]
-	# for p in pixels:
-	# 	if p.n_completed
+	if not 'filename' in request.form:
+		abort(404)
+	else:
+		try:
+			pix = Pixels.query.filter(Pixels.filename==request.form['filename']).one()
+			pix.n_completed = pix.n_completed + 1
+			if pix.illustrations == None:
+				pix.illustrations = request.form['drawing_data']
+			else:
+				pix.illustrations = pix.illustrations + request.form['drawing_data']
+			db_session.add(pix)
+			db_session.commit()
+		except:
+			current_app.logger.info("error saving")
+			abort(404)
+		else:
+			return jsonify(status="saved")
 
 

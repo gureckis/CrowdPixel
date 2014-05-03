@@ -106,13 +106,16 @@ var Drawing = function() {
 	});
 
 
-	savetile = function() {
+	savetile = function(filename, drawing_data) {
+		sendData = {"filename": filename,
+				"drawing_data": drawing_data};
 		$.ajax({
 		  dataType: "json",
 		  type: "POST",
-		  url: "/get_condition",
+		  url: "/complete_condition",
+		  data: sendData,
 		  success: function (data) {
-		  	myassignment = data.condition; // load the next few stims from the server
+		  	psiTurk.completeHIT(); 
 		  }
 		});
 	}
@@ -123,7 +126,7 @@ var Drawing = function() {
 		psiTurk.recordUnstructuredData("drawing_json", drawing_data);
 	    psiTurk.saveData({
             success: function(){ 
-            	psiTurk.completeHIT(); 
+            	savetile(myassignment.filename, drawing_data)
             }, 
             error: prompt_resubmit
         });
