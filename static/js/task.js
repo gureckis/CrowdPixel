@@ -7,6 +7,16 @@
 // Initalize psiturk object
 var psiTurk = PsiTurk(uniqueId, adServerLoc);
 
+var myassignment;
+
+$.ajax({
+  dataType: "json",
+  url: "/get_condition",
+  success: function (data) {
+  	myassignment = data.condition; // load the next few stims from the server
+  }
+});
+
 // All pages to be loaded
 var pages = [
 	"instructions/instruct-ready.html",
@@ -26,14 +36,18 @@ var Drawing = function() {
 
 	d3.select('#image')
 	  .append("img")
-	  .attr("src","/static/images/tiles/tile_15_15.png")
-	  .attr("height","100");
+	  .attr("src",myassignment.filename)
+	  .attr("height",myassignment.height)
+	  .attr("width",myassignment.width);
+
 
 	var sketchpad = Raphael.sketchpad("editor", {
-		width: 76,
-		height: 100,  // set these based on tile size
+		width: myassignment.width,
+		height: myassignment.height,  // set these based on tile size
 		editing: true
 	});
+
+
 	var pen = sketchpad.pen();
 	pen.width(2);
 	
@@ -63,11 +77,26 @@ var Drawing = function() {
 		sketchpad.clear();
 	});
 
+
+	savetile = function() {
+		$.ajax({
+		  dataType: "json",
+		  type: "POST",
+		  url: "/get_condition",
+		  success: function (data) {
+		  	myassignment = data.condition; // load the next few stims from the server
+		  }
+		});
+	}
+
+
 	$('#Next').click(function() {
 		drawing_data = sketchpad.json(); 
 		psiTurk.recordUnstructuredData("drawing_json", drawing_data);
 	    psiTurk.saveData({
-            success: function(){ psiTurk.completeHIT(); }, 
+            success: function(){ 
+            	psiTurk.completeHIT(); 
+            }, 
             error: prompt_resubmit
         });
 	});
@@ -81,6 +110,10 @@ var currentview;
  * Run Task
  ******************/
 $(window).load( function(){
+	d3.select('#editor')
+		.attr("height", myassignment.height)
+		.attr("width", myassignment.width);
+
     psiTurk.doInstructions(
     	instructionPages, // a list of pages you want to display in sequence
     	function() { currentview = new Drawing(); } // what you want to do when you are done with instructions

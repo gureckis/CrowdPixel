@@ -14,6 +14,9 @@ from psiturk.db import db_session, init_db, Base
 from psiturk.models import Participant
 from json import dumps, loads
 
+from random import shuffle
+from custom_models import Pixels
+
 # load the configuration options
 config = PsiturkConfig()
 config.load_config()
@@ -31,18 +34,26 @@ custom_code = Blueprint('custom_code', __name__, template_folder='templates', st
 #----------------------------------------------
 # example accessing data
 #----------------------------------------------
-@custom_code.route('/drawings')
-def getdrawings():
-    users = Participant.query.all()
-    data = [loads(subj.datastring) for subj in users if subj.datastring!=""]
-    drawing_data = [loads(d['questiondata']['drawing_json']) for d in data if "drawing_json" in d['questiondata']]
-    return jsonify(drawings=drawing_data)
-
-@custom_code.route('/gallery')
-@myauth.requires_auth
-def viewdrawings():
+@custom_code.route('/get_condition')
+def getcondition():
+	#save the tiles to the 
 	try:
-		return render_template('showdrawings.html')
-	except TemplateNotFound:
+		pix = Pixels.query.order_by(Pixels.n_completed.asc()).first()
+	except:
+		current_app.logger.info("no pixels in the database.  you may need to run setup.py first")
 		abort(404)
+	else:
+		condition = {"filename": pix.filename, "width": pix.width, "height": pix.height}
+		return jsonify(condition=condition)
+
+@custom_code.route('/complete_condition', methods=['POST'])
+def complete_condition():
+	if 'filename' not in request.args:
+		pass
+	# # save the tiles to the 
+	# pix = Pixels.query.all().order_by(Pixels.n_completed.asc())
+	# pixels = [p for p in pix]
+	# for p in pixels:
+	# 	if p.n_completed
+
 
