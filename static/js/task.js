@@ -41,6 +41,7 @@ var Drawing = function() {
 	  .attr("width",myassignment.width);
 
 
+
 	var sketchpad = Raphael.sketchpad("editor", {
 		width: myassignment.width,
 		height: myassignment.height,  // set these based on tile size
@@ -50,7 +51,34 @@ var Drawing = function() {
 
 	var pen = sketchpad.pen();
 	pen.width(2);
+
 	
+	d3.select('#editor')
+		.attr("height", myassignment.height)
+		.attr("width", myassignment.width);
+
+	$("#widthslider").rangeslider({
+	    // Feature detection
+	    polyfill: true
+	});
+
+ 	$(document).on('change', "#widthslider", function(e) {
+        var value = e.target.value;
+        pen.width(value);
+    });
+
+	$("#colorslider").rangeslider({
+	    // Feature detection
+	    polyfill: true
+	});
+
+ 	$(document).on('change', "#colorslider", function(e) {
+        var value = parseInt(e.target.value);
+        var hexcode = value.toString(16);
+        pen.color("#"+hexcode+hexcode+hexcode);
+    });
+
+
 	prompt_resubmit = function() {
 		replaceBody(error_message);
 		$("#resubmit").click(resubmit);
@@ -110,9 +138,6 @@ var currentview;
  * Run Task
  ******************/
 $(window).load( function(){
-	d3.select('#editor')
-		.attr("height", myassignment.height)
-		.attr("width", myassignment.width);
 
     psiTurk.doInstructions(
     	instructionPages, // a list of pages you want to display in sequence

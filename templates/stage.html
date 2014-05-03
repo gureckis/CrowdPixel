@@ -1,7 +1,7 @@
 <div id="container-exp">
 	<div id="trial">
-		<h1>Please try your best to draw a detailed copy of the image on the left in the box on the right!</h1>
-		<p class="text-muted">Suggestions: Fill in dark regions as best you can and use dots or lines to do shading.  You can adjust the pen width as well as the color below.</p>
+		<h1>Please try your best to draw your own version of the image on the left in the box on the right!</h1>
+		<p class="text-muted">Suggestions:  You can adjust the pen width as well as the color using the sliders below.</p>
 
 		<div class="container-fluid">
 			<div id="imgedit">
@@ -10,8 +10,23 @@
 			</div>
 		</div>		
 
+		<p>
+		<b>Adjust pen width</b><br>
+		Thin &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Thick<br>
+		<input type="range" id="widthslider" min="1" max="50" step="1" value="2" style="width: 200px; margin-left: auto; margin-right: auto;">
+		</p>
+
+
+		<p>
+		<b>Adjust pen color</b><br>
+		Black &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; White</br>
+		<input type="range" id="colorslider" min="0" max="255" step="1" value="0" style="width: 200px; margin-left: auto; margin-right: auto;">
+		</p>
+
+
 		<p>Click the green button when you are finished</p>
 
+		
 		<button type="button" id="Undo" value="next" class="btn btn-warning btn-lg" onclick="e">
         	Undo last
         </button>
